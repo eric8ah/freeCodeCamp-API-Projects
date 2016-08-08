@@ -78,7 +78,7 @@ app.get('/:query', function (req, res) {
      "Unix": null,
      "Natural": null };
   }
-  res.send(JSON.stringify(response));
+  res.send(JSON.parse(JSON.stringify(response)));
   console.log('response was sent');
 });
 
