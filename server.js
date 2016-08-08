@@ -60,17 +60,20 @@ app.get('/:query', function (req, res) {
   var reqString = string;
   var response = null;
   if (moment.unix(reqString).isValid() === true && !isNaN(reqString)) {
+   console.log('Unix time was received');
    getNaturalDate(reqString);
    response = { 
      "Unix": reqString,
      "Natural": naturalDate };
   } else if (isNaN(reqString) && moment(new Date(reqString)).isValid()) {
+     console.log('Natural date was received');
      var tempDate = new Date(reqString);
      var unixTime = (tempDate.getTime())/1000;
      response = { 
      "Unix": unixTime,
      "Natural": reqString };
   } else {
+      console.log('Invalid input');
       response = { 
      "Unix": null,
      "Natural": null };
@@ -79,6 +82,6 @@ app.get('/:query', function (req, res) {
   console.log('response was sent');
 });
 
-app.listen(8080, function () {
+app.listen(process.env.PORT || 8080, function () {
   console.log('Date has been received');
 });
