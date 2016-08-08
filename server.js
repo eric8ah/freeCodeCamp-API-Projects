@@ -2,6 +2,7 @@ var express = require('express');
 var moment = require('moment');
 var url = require('url');
 var app = express();
+var path = require('path');
 
 var testString = 754012800;
 var naturalDate;
@@ -55,6 +56,19 @@ switch(natMonth + 1) {
 naturalDate = natMonthString + " " + natDay + ", " + natYear;
 }
 
+app.get('/', function(req, res) {
+    var readme = path.join(__dirname, 'README.md');
+    res.sendFile(readme, function(err) {
+        if (err) {
+        console.log(err);
+        res.status(err.status).end();
+        }
+        else {
+            console.log('File was sent');
+        }
+    });
+});
+
 app.get('/:query', function (req, res) {
   var string = req.params.query;
   var reqString = string;
@@ -78,7 +92,7 @@ app.get('/:query', function (req, res) {
      "Unix": null,
      "Natural": null };
   }
-  res.send(JSON.parse(JSON.stringify(response)));
+  res.json(JSON.parse(JSON.stringify(response)));
   console.log('response was sent');
 });
 
